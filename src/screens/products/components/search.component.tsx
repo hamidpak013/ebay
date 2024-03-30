@@ -57,7 +57,7 @@ const SearchComponent = () => {
           elevation: 2,
         }}>
         <Image
-          source={require('../assets/products/filter.png')}
+          source={require('../../../assets/products/filter.png')}
           //   eslint-disable-next-line react-native/no-inline-styles
           style={{width: 24, height: 24}}
         />

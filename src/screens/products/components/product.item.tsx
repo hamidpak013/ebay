@@ -21,6 +21,7 @@ interface ProductItemProps {
 }
 
 const ProductItem: React.FC<ProductItemProps> = ({item}) => {
+  console.log('item====', item);
   return (
     <View style={styles.item}>
       <View style={styles.contentContainer}>
@@ -31,7 +32,7 @@ const ProductItem: React.FC<ProductItemProps> = ({item}) => {
             <Text style={(styles.title, {color: '#FF5216'})}>$149.00</Text>
             <TouchableOpacity style={styles.arrow_right}>
               <Image
-                source={require('../assets/products/arrow-right.png')}
+                source={require('../../../assets/products/arrow-right.png')}
                 style={{width: 14, height: 14}}
               />
             </TouchableOpacity>
