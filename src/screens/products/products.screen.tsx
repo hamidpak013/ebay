@@ -1,16 +1,10 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  Text,
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList,
-  Dimensions,
-  Image,
-} from 'react-native';
+import {Text, View, StyleSheet, FlatList} from 'react-native';
 import NavComponent from '../../shared/components/nav.component';
 import FloatingButton from '../../shared/components/products.floating.button';
+import SearchComponent from '../../components/search.component';
+import ProductItem from '../../components/product.item';
+import {products} from '../../shared/dummyData/Products';
 
 const data = [
   {id: '1', title: 'Item 1'},
@@ -30,60 +24,46 @@ const data = [
   {id: '8', title: 'Item 8'},
 ];
 const numColumns = 2;
-const screenWidth = Dimensions.get('window').width;
+
 const ProductsScreen = () => {
-  const renderItem = ({item}: any) => (
-    <View style={styles.item}>
-      <Image
-        source={require('../../assets/products/product_1.png')}
-        style={styles.image}
-      />
-      <Text style={styles.title}>Pokémon Card</Text>
-      <Text style={styles.title}>$149.00</Text>
-    </View>
-  );
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {/* navbar */}
       <NavComponent />
-      <Text style={{fontSize: 24, fontWeight: '600', margin: 20}}>
-        Track Your Product✌️
-      </Text>
+      <Text style={styles.heading}>Track Your Product✌️</Text>
+      <SearchComponent />
       <FlatList
-        data={data}
-        renderItem={renderItem}
+        data={products}
+        renderItem={ProductItem}
         keyExtractor={item => item.id}
         numColumns={numColumns}
-        contentContainerStyle={styles.container}
+        contentContainerStyle={{flexGrow: 1}}
       />
       <FloatingButton />
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    alignItems: 'flex-start',
-    // padding: 10,
-    height: '100%',
-    width: '100%',
+    flex: 1,
+    marginTop: 44,
+    marginHorizontal: 10,
   },
-  item: {
-    // backgroundColor: '#f9c2ff',
-    padding: 20,
-    margin: 5,
-    // width: screenWidth / 2 - 20,
-    width: (screenWidth - 20) / numColumns, // Calculate item width dynamically
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+  heading: {
+    fontSize: 24,
+    fontWeight: '600',
+    marginHorizontal: 20,
+    marginTop: 20,
+    marginBottom: 10,
   },
   title: {
     fontSize: 16,
   },
   image: {
-    width: 130,
     height: 130,
+    resizeMode: 'contain',
   },
 });
 export default ProductsScreen;
