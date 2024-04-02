@@ -18,28 +18,31 @@ interface ProductItemProps {
     title: string;
     img: any;
   };
+  handleTap: () => void;
 }
 
-const ProductItem: React.FC<ProductItemProps> = ({item}) => {
+const ProductItem: React.FC<ProductItemProps> = ({item, handleTap}) => {
   console.log('item====', item);
   return (
-    <View style={styles.item}>
-      <View style={styles.contentContainer}>
-        <Image source={item.img} style={styles.image} />
-        <View style={{width: '100%', padding: 20}}>
-          <Text style={styles.title}>{item.title}</Text>
-          <View style={styles.content}>
-            <Text style={(styles.title, {color: '#FF5216'})}>$149.00</Text>
-            <TouchableOpacity style={styles.arrow_right}>
-              <Image
-                source={require('../../../assets/products/arrow-right.png')}
-                style={{width: 14, height: 14}}
-              />
-            </TouchableOpacity>
+    <TouchableOpacity onPress={handleTap}>
+      <View style={styles.item}>
+        <View style={styles.contentContainer}>
+          <Image source={item.img} style={styles.image} />
+          <View style={{width: '100%', padding: 20}}>
+            <Text style={styles.title}>{item.title}</Text>
+            <View style={styles.content}>
+              <Text style={(styles.title, {color: '#FF5216'})}>$149.00</Text>
+              <TouchableOpacity style={styles.arrow_right}>
+                <Image
+                  source={require('../../../assets/products/arrow-right.png')}
+                  style={{width: 14, height: 14}}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

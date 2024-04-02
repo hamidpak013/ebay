@@ -9,6 +9,9 @@ import {
 } from 'react-native';
 import NavComponent from '../../shared/components/nav.component';
 import {notificationsList} from '../../shared/dummyData/Notifications';
+import {RouteProp} from '@react-navigation/native';
+import {ParamsList} from '../../shared/param.list';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 const NotificationItem = ({item}) => {
   return (
@@ -83,12 +86,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#f2f2f2',
   },
 });
-
-const NotificationScreen = () => {
+type Props = {
+  route: RouteProp<ParamsList, 'Notification'>;
+  navigation: StackNavigationProp<ParamsList, 'Notification'>;
+};
+const NotificationScreen: React.FC<Props> = ({navigation}) => {
   return (
     <View style={{marginTop: 44, paddingBottom: 60}}>
-      <NavComponent screenName={'notification'} />
+      <NavComponent
+        screenName={'notification'}
+        navigation={navigation}
+        leftButton={() => navigation.goBack()}
+      />
       <SectionList
+        showsVerticalScrollIndicator={false}
         sections={notificationsList}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) => <NotificationItem item={item} />}

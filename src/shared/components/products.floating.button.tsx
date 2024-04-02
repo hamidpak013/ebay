@@ -1,9 +1,22 @@
+import {RouteProp} from '@react-navigation/core';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {ParamsList} from '../param.list';
 
-const FloatingButton = ({onPress}: any) => {
+type Props = {
+  // route: RouteProp<ParamsList, 'addListingScreen'>;
+  // navigation: StackNavigationProp<ParamsList, 'addListingScreen'>;
+  navigation: any;
+};
+const FloatingButton: React.FC<Props> = ({navigation}) => {
+  console.log('floating====', navigation);
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity
+      style={styles.button}
+      onPress={() => {
+        navigation.navigate('AddListing');
+      }}>
       {/* <Text style={styles.buttonText}>+</Text> */}
       <Image
         source={require('../../assets/products/plus.png')}

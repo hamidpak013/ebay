@@ -1,9 +1,17 @@
 import React from 'react';
 import {Text, View, TouchableOpacity, StyleSheet, Image} from 'react-native';
-interface NavProps {
+type Props = {
   screenName: string;
-}
-const NavComponent: React.FC<NavProps> = ({screenName}) => {
+  navigation?: any;
+  leftButton?: () => void;
+  rightButton?: () => void;
+};
+const NavComponent: React.FC<Props> = ({
+  screenName,
+  navigation,
+  leftButton,
+  rightButton,
+}) => {
   return (
     <View>
       {/* ====================== Product Nav-Bar screen  ===================== */}
@@ -23,7 +31,7 @@ const NavComponent: React.FC<NavProps> = ({screenName}) => {
               Products
             </Text>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={rightButton}>
             <Image
               source={require('../../assets/notification.png')}
               style={styles.image}
@@ -34,7 +42,13 @@ const NavComponent: React.FC<NavProps> = ({screenName}) => {
       {/* ====================== Notification screen  ===================== */}
       {screenName === 'notification' && (
         <View style={styles.nav}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={leftButton}
+            // onPress={() => {
+            //   console.log('navigation====', navigation);
+            //   navigation.goBack();
+            // }}
+          >
             <Image
               source={require('../../assets/back-arrow.png')}
               style={{width: 48, height: 48}}
@@ -82,9 +96,13 @@ const NavComponent: React.FC<NavProps> = ({screenName}) => {
 
       {screenName === 'listing' && (
         <View style={styles.nav}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              console.log('navigation====', navigation);
+              navigation.goBack();
+            }}>
             <Image
-              source={require('../../assets/menu.png')}
+              source={require('../../assets/back-arrow.png')}
               style={styles.image}
             />
           </TouchableOpacity>
@@ -93,15 +111,10 @@ const NavComponent: React.FC<NavProps> = ({screenName}) => {
               style={{
                 fontSize: 20,
               }}>
-              Products
+              Add Listing
             </Text>
           </View>
-          <TouchableOpacity>
-            <Image
-              source={require('../../assets/notification.png')}
-              style={styles.image}
-            />
-          </TouchableOpacity>
+          <TouchableOpacity />
         </View>
       )}
     </View>
