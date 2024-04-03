@@ -6,6 +6,7 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import NavComponent from '../../shared/components/nav.component';
 import {notificationsList} from '../../shared/dummyData/Notifications';
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: 'white',
   },
 });
 type Props = {
@@ -92,7 +93,13 @@ type Props = {
 };
 const NotificationScreen: React.FC<Props> = ({navigation}) => {
   return (
-    <View style={{marginTop: 44, paddingBottom: 60}}>
+    <View
+      style={{
+        paddingTop: Platform.OS === 'ios' ? 44 : 10,
+        marginBottom: 10,
+        paddingBottom: 60,
+        backgroundColor: 'white',
+      }}>
       <NavComponent
         screenName={'notification'}
         navigation={navigation}
@@ -106,7 +113,7 @@ const NotificationScreen: React.FC<Props> = ({navigation}) => {
         renderSectionHeader={({section}) => (
           <Text style={styles.sectionHeader}>{section.title}</Text>
         )}
-        contentContainerStyle={{flexGrow: 1}}
+        contentContainerStyle={{flexGrow: 1, backgroundColor: 'white'}}
       />
     </View>
   );

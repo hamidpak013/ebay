@@ -4,7 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import NotificationScreen from '../screens/notifications/notifications.screen';
 import AddListingScreen from '../screens/AddListing/add.listing.screen';
 import ProductsScreen from '../screens/products/products.screen';
-import ProductDetailScreen from '../screens/details/product.detail.scree';
+import ProductDetailScreen from '../screens/details/product.detail.screen';
 
 export type RootStackParamList = {
   Product: undefined;

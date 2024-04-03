@@ -1,71 +1,73 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
-  Animated,
   View,
   Image,
   StyleSheet,
+  ScrollView,
   TouchableOpacity,
-  Dimensions,
 } from 'react-native';
 
-const {width} = Dimensions.get('window');
-const images = ['1', '2', '3', '4', '5'];
+const images = [
+  {id: 1, uri: require('../../../assets/products/product_1.png')},
+  {id: 2, uri: require('../../../assets/products/product_2.png')},
+  {id: 3, uri: require('../../../assets/products/product_1.png')},
+  {id: 4, uri: require('../../../assets/products/product_4.png')},
+  {id: 5, uri: require('../../../assets/product_detail.png')},
+];
+
 const ProductDetailSlider = () => {
-  const scrollX = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    scrollX.addListener(({value}) => {
-      let index = Math.round(value / width);
-      if (index < 0) {
-        index = images.length - 1;
-      } else if (index >= images.length) {
-        index = 0;
-      }
-
-      setActiveImage(index);
-    });
-
-    return () => {
-      scrollX.removeAllListeners();
-    };
-  }, []);
-
-  const [activeImage, setActiveImage] = React.useState(0);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [image, setImage] = useState<any>(images?.[0].uri);
+  const handleImagePress = id => {
+    setSelectedImage(id);
+  };
+  const renderItem = ({item}) => {
+    return (
+      <ScrollView horizontal>
+        {/* <Image source={{ uri: item.uri }} style={styles.thumbnail} /> */}
+        <Image
+          // source={require('../../../assets/product_detail.png')}
+          source={item.uri}
+          style={styles.thumbnail}
+        />
+      </ScrollView>
+    );
+  };
 
   return (
     <View style={styles.container}>
-      <Animated.ScrollView
+      {/* <Image source={{ uri: images[activeIndex].uri }} style={styles.mainImage} /> */}
+      <Image
+        // source={require('../../../assets/product_detail.png')}
+        source={image}
+        style={styles.mainImage}
+      />
+
+      {/* <View style={styles.container_image}> */}
+      <ScrollView
         horizontal
-        pagingEnabled
-        decelerationRate="fast"
-        snapToAlignment={width}
-        scrollEventThrottle={16}
-        onScroll={Animated.event(
-          [{nativeEvent: {contentOffset: {x: scrollX}}}],
-          {useNativeDriver: false},
-        )}
-        showsHorizontalScrollIndicator={false}
-        style={styles.scrollView}>
-        {images.map((image, index) => (
-          <Image
-            key={image}
-            source={require('../../../assets/product_detail.png')}
-            style={styles.image}
-          />
-        ))}
-      </Animated.ScrollView>
-      <View style={styles.indicatorContainer}>
-        {images.map((_, index) => (
+        contentContainerStyle={styles.scrollContainer}
+        showsHorizontalScrollIndicator={false}>
+        {images.map(image => (
           <TouchableOpacity
-            key={index}
-            onPress={() => setActiveImage(index)}
+            key={image.id}
+            onPress={() => {
+              handleImagePress(image.id);
+              setImage(image.uri);
+            }}
             style={[
-              styles.indicator,
-              {backgroundColor: index === activeImage ? 'black' : 'gray'},
-            ]}
-          />
+              styles.imageContainer,
+              selectedImage === image.id && styles.selectedImage,
+            ]}>
+            <Image
+              source={image.uri}
+              style={styles.image}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
         ))}
-      </View>
+      </ScrollView>
+      {/* </View> */}
     </View>
   );
 };
@@ -73,26 +75,53 @@ const ProductDetailSlider = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-  },
-  scrollView: {
-    width: width * images.length,
-  },
-  image: {
-    width: width,
-    height: width,
-    resizeMode: 'contain',
-  },
-  indicatorContainer: {
-    flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  thumbnail: {
+    width: 50,
+    height: 50,
+    marginHorizontal: 5,
+    borderRadius: 5,
+  },
+  mainImage: {
+    width: 260,
+    height: 250,
+    resizeMode: 'cover',
+  },
+  paginationContainer: {
     marginTop: 10,
   },
-  indicator: {
+  paginationDot: {
     width: 10,
     height: 10,
     borderRadius: 5,
-    marginHorizontal: 5,
+    backgroundColor: 'blue',
+  },
+  paginationDotInactive: {
+    backgroundColor: 'lightgrey',
+  },
+  container_image: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  scrollContainer: {
+    paddingVertical: 10,
+  },
+  imageContainer: {
+    width: 60,
+    height: 60,
+    // marginHorizontal: 5,
+    borderWidth: 1,
+    borderColor: 'transparent',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+  selectedImage: {
+    borderRadius: 16,
+    // borderColor: 'lightgrey',
   },
 });
 

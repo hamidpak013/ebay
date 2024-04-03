@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StyleSheet, FlatList} from 'react-native';
+import {Text, View, StyleSheet, FlatList, Platform} from 'react-native';
 import NavComponent from '../../shared/components/nav.component';
 import FloatingButton from '../../shared/components/products.floating.button';
 
@@ -50,9 +50,10 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flex: 1,
-    marginTop: 44,
-    marginHorizontal: 10,
+    paddingTop: Platform.OS === 'ios' ? 44 : 20,
+    paddingHorizontal: 10,
     paddingBottom: 10,
+    backgroundColor: 'white',
   },
   heading: {
     fontSize: 24,

@@ -3,6 +3,8 @@ import {Text, View, TouchableOpacity, StyleSheet, Image} from 'react-native';
 type Props = {
   screenName: string;
   navigation?: any;
+  leftIcon?: any;
+  rightIcon?: any;
   leftButton?: () => void;
   rightButton?: () => void;
 };
@@ -69,9 +71,9 @@ const NavComponent: React.FC<Props> = ({
       {/* ====================== detail screen  ===================== */}
       {screenName === 'detail' && (
         <View style={styles.nav}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={leftButton}>
             <Image
-              source={require('../../assets/menu.png')}
+              source={require('../../assets/back-arrow.png')}
               style={styles.image}
             />
           </TouchableOpacity>
@@ -85,7 +87,7 @@ const NavComponent: React.FC<Props> = ({
           </View>
           <TouchableOpacity>
             <Image
-              source={require('../../assets/notification.png')}
+              source={require('../../assets/favriout.png')}
               style={styles.image}
             />
           </TouchableOpacity>
@@ -96,11 +98,7 @@ const NavComponent: React.FC<Props> = ({
 
       {screenName === 'listing' && (
         <View style={styles.nav}>
-          <TouchableOpacity
-            onPress={() => {
-              console.log('navigation====', navigation);
-              navigation.goBack();
-            }}>
+          <TouchableOpacity onPress={leftButton}>
             <Image
               source={require('../../assets/back-arrow.png')}
               style={styles.image}

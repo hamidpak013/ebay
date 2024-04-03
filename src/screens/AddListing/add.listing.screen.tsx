@@ -18,14 +18,24 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import NavComponent from '../../shared/components/nav.component';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {ParamsList} from '../../shared/param.list';
+import {RouteProp} from '@react-navigation/native';
 
-const AddListingScreen = () => {
+type Props = {
+  route: RouteProp<ParamsList, 'Notification'>;
+  navigation: StackNavigationProp<ParamsList, 'Notification'>;
+};
+const AddListingScreen: React.FC<Props> = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <NavComponent screenName="listing" />
-
+      <NavComponent
+        screenName="listing"
+        leftButton={() => navigation.goBack()}
+      />
       <View style={styles.containerSpacing}>
         <View>
           <Text style={styles.title}>Product ID</Text>
@@ -48,8 +58,9 @@ const AddListingScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    marginTop: 44,
+    // backgroundColor: '#fff',
+    marginTop: Platform.OS === 'ios' ? 44 : 10,
+    backgroundColor: 'white',
   },
   containerSpacing: {
     flex: 1,
